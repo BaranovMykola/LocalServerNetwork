@@ -11,18 +11,17 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-//    QLocalSocket* localSocket= new QLocalSocket();
-//    localSocket->connectToServer("KuzyaServer");
     LocalClient client;
     QByteArray message;
     QTextStream qtin(stdin);
-//    QDataStream qtin;
-    /*
+
     do
     {
-        qtin>> message;
+        message.clear();
+        message.append(qtin.readLine());
+        client.write(message);
     }
-    while(message != "exit");*/
+    while(message != "exit");
     a.exec();
     return 0;
 }

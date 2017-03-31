@@ -2,9 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-//#include <QtNetwork/QLocalServer>
-#include <QtNetwork/QLocalSocket>
 
+class QLocalSocket;
 class QLocalServer;
 
 namespace Ui {

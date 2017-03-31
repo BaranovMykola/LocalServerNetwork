@@ -9,8 +9,6 @@ LocalClient::LocalClient()
     mLocalClient = new QLocalSocket(this);
     mLocalClient->connectToServer("KuzyaServer");
     connect(mLocalClient, SIGNAL(readyRead()), this, SLOT(slotReadCommands()), Qt::UniqueConnection);
-//    mLocalClient->waitForReadyRead(1000);
-    //    qDebug() << mLocalClient->readAll();
 }
 
 void LocalClient::write(QByteArray message)

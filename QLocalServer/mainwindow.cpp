@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     if(!mServer->listen("KuzyaServer"))
     {
         ui->output->appendPlainText(tr("Unable to start this server: %1").arg(mServer->errorString()));
-       // return;
     }
     else
     {
@@ -33,20 +32,14 @@ MainWindow::~MainWindow()
 void MainWindow::slotNewConnection()
 {
     QLocalSocket *localSocket = mServer->nextPendingConnection();
-//    connect(localSocket, SIGNAL(disconnected()), localSocket, SLOT(deleteLater()));
-    QString message = "Heelo, world! (via Server)";
-    localSocket->write("Heelo, world! (via Server)");
-    ui->output->appendPlainText(tr("Trying to write %1").arg(message));
-    bool written = localSocket->flush();
-    ui->output->appendPlainText(tr("Message was written ").arg(written ? "succsesfully" : "with error"));
-    //localSocket->disconnectFromServer();
+    connect(localSocket, SIGNAL(readyRead()), this, SLOT(slotRead()), Qt::UniqueConnection);
     ui->commandLine->setEnabled(true);
-    mClient = localSocket;
 }
 
 void MainWindow::slotRead()
 {
-    //    ui->output(tr("Read from client: %1").arg(mServer->));
+    QLocalSocket* senderSocket = (QLocalSocket*)sender();
+    ui->output->appendPlainText(senderSocket->readAll());
 }
 
 void MainWindow::slotWrite()
